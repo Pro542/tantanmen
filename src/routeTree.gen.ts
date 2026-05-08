@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TodosRouteImport } from './routes/todos'
 import { Route as PayablesRouteImport } from './routes/payables'
 import { Route as CashflowRouteImport } from './routes/cashflow'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TodosRoute = TodosRouteImport.update({
+  id: '/todos',
+  path: '/todos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PayablesRoute = PayablesRouteImport.update({
   id: '/payables',
   path: '/payables',
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof AnalyticsRoute
   '/cashflow': typeof CashflowRoute
   '/payables': typeof PayablesRoute
+  '/todos': typeof TodosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analytics': typeof AnalyticsRoute
   '/cashflow': typeof CashflowRoute
   '/payables': typeof PayablesRoute
+  '/todos': typeof TodosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/analytics': typeof AnalyticsRoute
   '/cashflow': typeof CashflowRoute
   '/payables': typeof PayablesRoute
+  '/todos': typeof TodosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/analytics' | '/cashflow' | '/payables'
+  fullPaths: '/' | '/analytics' | '/cashflow' | '/payables' | '/todos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/analytics' | '/cashflow' | '/payables'
-  id: '__root__' | '/' | '/analytics' | '/cashflow' | '/payables'
+  to: '/' | '/analytics' | '/cashflow' | '/payables' | '/todos'
+  id: '__root__' | '/' | '/analytics' | '/cashflow' | '/payables' | '/todos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,10 +76,18 @@ export interface RootRouteChildren {
   AnalyticsRoute: typeof AnalyticsRoute
   CashflowRoute: typeof CashflowRoute
   PayablesRoute: typeof PayablesRoute
+  TodosRoute: typeof TodosRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/todos': {
+      id: '/todos'
+      path: '/todos'
+      fullPath: '/todos'
+      preLoaderRoute: typeof TodosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/payables': {
       id: '/payables'
       path: '/payables'
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnalyticsRoute: AnalyticsRoute,
   CashflowRoute: CashflowRoute,
   PayablesRoute: PayablesRoute,
+  TodosRoute: TodosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

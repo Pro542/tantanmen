@@ -1,7 +1,7 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import { BarChart2, CreditCard, LayoutDashboard } from "lucide-react";
+import { BarChart2, CheckSquare, CreditCard, LayoutDashboard } from "lucide-react";
 import "../styles.css";
 
 export const Route = createRootRoute({
@@ -12,6 +12,7 @@ const navItems = [
 	{ to: "/cashflow", label: "Cash Flow", icon: LayoutDashboard },
 	{ to: "/analytics", label: "Analytics", icon: BarChart2 },
 	{ to: "/payables", label: "Payables", icon: CreditCard },
+	{ to: "/todos", label: "Todos", icon: CheckSquare },
 ] as const;
 
 function RootComponent() {
